@@ -8,6 +8,7 @@ const { graphqlHTTP } = require('express-graphql');
 
 const qraphqlSchema = require('./graphql/schema');
 const qraphqlResolver = require('./graphql/resolvers');
+const Auth = require('./middleware/auth');
 
 dotenv.config();
 
@@ -54,6 +55,7 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(Auth);
 app.use('/graphql', graphqlHTTP({
     schema: qraphqlSchema,
     rootValue: qraphqlResolver,

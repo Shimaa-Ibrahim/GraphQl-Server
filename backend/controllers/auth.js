@@ -50,7 +50,7 @@ exports.login = async ({ credentials: { email, password } }) => {
       userId: user._id,
       email: user.email
     },
-    "super-jwt-secert-key",
+    process.env.JWT_SECRET_KEY,
     { expiresIn: "1h" }
   );
   return {
