@@ -5,12 +5,12 @@ const User = require("../models/user");
 
 exports.register = async ({ userInput: { name, email, password } }) => {
   const errs = [];
-  if (!validator.isEmail(email)) errs.push({ message: "Invalid Email!" });
+  if (!validator.isEmail(email)) errs.push("Invalid Email!");
   if (validator.isEmpty(password) || !validator.isLength(password, { min: 5 })) {
-    errs.push({ message: "Password is too short!" });
+    errs.push("Password is too short!");
   }
   if (errs.length > 0) {
-    const err = new Error("Invalid input.");
+    const err = new Error("Invalid input");
     err.data = errs;
     err.code = 422;
     throw err;

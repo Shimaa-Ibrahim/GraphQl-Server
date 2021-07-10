@@ -16,7 +16,6 @@ module.exports = buildSchema(`
     input postInput {
         title: String!
         content: String!
-        imageURL: String
     }
 
     input commentInput {

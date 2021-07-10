@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const User = require('./user');
+
 const Schema = mongoose.Schema;
 
 const postSchema = new Schema(
@@ -34,5 +36,9 @@ const postSchema = new Schema(
   },
   { timestamps: true }
 );
+
+postSchema.pre('save', async function () {
+  await User.updateOne({_id: this.userId}, {$push: {posts: this._id}});
+});
 
 module.exports = mongoose.model("Post", postSchema);
