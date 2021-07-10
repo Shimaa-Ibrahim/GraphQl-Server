@@ -58,7 +58,8 @@ module.exports = buildSchema(`
     }
 
     type Query {
-        getPosts: [Post!]!
+        posts: [Post!]!
+        post(_id: ID): Post!
     }
 
     type Mutation {

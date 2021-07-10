@@ -2,6 +2,24 @@ const validator = require("validator");
 
 const Post = require('../models/post');
 
+
+exports.getPosts = async () => {
+    const posts = await Post.find({})
+    .sort({createdAt: -1})
+    .populate("userId", ["_id", "name"]);
+    return posts;
+}
+
+exports.getOnePost = async (_id) => {
+    const post = await Post.findById(_id).populate("userId", ["_id", "name"]);
+    if(!post){
+        const err = new Error("Post is not found!");
+        err.code = 404;
+        throw err
+    }
+    return post;
+}
+
 exports.createPost = async ({ postInput: { title, content } }, req) => {
     if(!req.userId) {
         const err = new Error("Unauthorized!");
@@ -28,3 +46,4 @@ exports.createPost = async ({ postInput: { title, content } }, req) => {
     const createdPost = await post.save();
     return createdPost.populate("userId", ["_id", "name"]).execPopulate();
 }
+

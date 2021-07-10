@@ -4,5 +4,7 @@ module.exports = {
     register: auth.register,
     login: auth.login,
     createPost: posts.createPost,
+    posts: posts.getPosts,
+    post: posts.getOnePost,
     
 };
