@@ -19,6 +19,11 @@ module.exports = buildSchema(`
         imageURL: String
     }
 
+    input commentInput {
+        content: String!
+        PostId: ID!
+    }
+
     type User {
         _id: ID!
         name: String!
@@ -33,6 +38,17 @@ module.exports = buildSchema(`
         content: String!
         imageURL: String
         userId: User!
+        likes: [User]!
+        comments: [Comment]!
+        createdAt: String!
+        updatedAt: String!
+    }
+
+    type Comment {
+        _id: ID!
+        content: String!
+        userId: User!
+        postId: Post!
         createdAt: String!
         updatedAt: String!
     }
@@ -43,14 +59,14 @@ module.exports = buildSchema(`
     }
 
     type Query {
-        hello: String!
+        getPosts: [Post!]!
     }
 
     type Mutation {
         register(userInput: userInput): User!
         login(credentials: credentials): Auth!
         createPost(postInput: postInput) : Post!
-
+        addComment(commentInput: commentInput) : Comment!
     }
 
     schema {
