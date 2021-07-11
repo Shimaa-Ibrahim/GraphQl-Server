@@ -6,5 +6,7 @@ module.exports = {
     createPost: posts.createPost,
     posts: posts.getPosts,
     post: posts.getOnePost,
+    updatePost: posts.updatePost,
+    deletePost: posts.deletePost,
     
 };

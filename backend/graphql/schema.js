@@ -59,13 +59,15 @@ module.exports = buildSchema(`
 
     type Query {
         posts: [Post!]!
-        post(_id: ID): Post!
+        post(id: ID): Post!
     }
 
     type Mutation {
         register(userInput: userInput): User!
         login(credentials: credentials): Auth!
         createPost(postInput: postInput) : Post!
+        updatePost(id:ID ,postInput: postInput) : Post!
+        deletePost(id:ID) : Post!
         addComment(commentInput: commentInput) : Comment!
     }
 

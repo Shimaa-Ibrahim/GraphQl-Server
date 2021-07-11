@@ -41,4 +41,8 @@ postSchema.pre('save', async function () {
   await User.updateOne({_id: this.userId}, {$push: {posts: this._id}});
 });
 
+postSchema.pre('deleteOne', { document: true }, async function () {
+  await User.updateOne({_id: this.userId}, {$pull: {posts: this._id}});
+});
+
 module.exports = mongoose.model("Post", postSchema);
