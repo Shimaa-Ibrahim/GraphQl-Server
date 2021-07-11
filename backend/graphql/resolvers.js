@@ -8,5 +8,5 @@ module.exports = {
     post: posts.getOnePost,
     updatePost: posts.updatePost,
     deletePost: posts.deletePost,
-    
+    toggleLike: posts.TogglePostlike,
 };

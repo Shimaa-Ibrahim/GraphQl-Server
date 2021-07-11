@@ -68,6 +68,7 @@ module.exports = buildSchema(`
         createPost(postInput: postInput) : Post!
         updatePost(id:ID ,postInput: postInput) : Post!
         deletePost(id:ID) : Post!
+        toggleLike(id:ID): Post!
         addComment(commentInput: commentInput) : Comment!
     }
 
