@@ -20,7 +20,7 @@ module.exports = buildSchema(`
 
     input commentInput {
         content: String!
-        PostId: ID!
+        postId: ID!
     }
 
     type User {
@@ -66,10 +66,12 @@ module.exports = buildSchema(`
         register(userInput: userInput): User!
         login(credentials: credentials): Auth!
         createPost(postInput: postInput) : Post!
-        updatePost(id:ID ,postInput: postInput) : Post!
+        updatePost(id:ID, postInput: postInput) : Post!
         deletePost(id:ID) : Post!
         toggleLike(id:ID): Post!
         addComment(commentInput: commentInput) : Comment!
+        updateComment(id:ID, commentInput: commentInput) : Comment!
+        deleteComment(id:ID): Comment!
     }
 
     schema {

@@ -1,23 +1,36 @@
 const validator = require("validator");
 
 const Post = require('../models/post');
-
-function throwError(message, code, data = null) {
-    const err = new Error(message);
-    err.code = code;
-    err.data = data;
-    return err;
-}
+const throwError = require('./error');
 
 exports.getPosts = async () => {
     const posts = await Post.find({})
         .sort({ createdAt: -1 })
-        .populate("userId", ["_id", "name"]);
+        .populate("userId", ["_id", "name"])
+        .populate({
+            path:"comments",
+            select: "_id content createdAt updatedAt",
+            populate: {
+                    path: "userId",
+                    model: "User",
+                    select: "_id name"
+                }
+        });
     return posts;
 }
 
 exports.getOnePost = async ({ id }) => {
-    const post = await Post.findById(id).populate("userId", ["_id", "name"]);
+    const post = await Post.findById(id)
+    .populate("userId", ["_id", "name"])
+    .populate({
+        path:"comments",
+        select: "_id content createdAt updatedAt",
+        populate: {
+                path: "userId",
+                model: "User",
+                select: "_id name"
+            }
+    });;
     if (!post) throw throwError("Post is not found!", 404);
     return post;
 }
@@ -68,7 +81,7 @@ exports.deletePost = async ({ id }, req) => {
     return post;
 }
 
-exports.TogglePostlike = async ({ id }, req) => {
+exports.togglePostlike = async ({ id }, req) => {
     if (!req.userId) throw throwError("Unauthorized!", 401);
     const post = await Post.findById(id);
     if (!post) throw throwError("Post is not found!", 404);

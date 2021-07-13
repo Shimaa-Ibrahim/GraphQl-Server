@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const User = require('./user');
+const Comment = require('./comment');
 
 const Schema = mongoose.Schema;
 
@@ -43,6 +44,8 @@ postSchema.pre('save', async function () {
 
 postSchema.pre('deleteOne', { document: true }, async function () {
   await User.updateOne({_id: this.userId}, {$pull: {posts: this._id}});
+  await Comment.deleteMany({postId: this._id});
+
 });
 
 module.exports = mongoose.model("Post", postSchema);
