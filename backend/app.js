@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const dotenv = require('dotenv');
+const helmet = require('helmet');
+const compression = require('compression');
 const { graphqlHTTP } = require('express-graphql');
 
 const qraphqlSchema = require('./graphql/schema');
@@ -13,9 +15,10 @@ const Auth = require('./middleware/auth');
 dotenv.config();
 
 const app = express();
+app.use(helmet({ contentSecurityPolicy: (process.env.NODE_ENV === 'production') ? undefined : false }));
+app.use(compression());
 const PORT = process.env.PORT || 4000;
 const MONGO_URI = process.env.MONGO_URI;
-
 
 // upload image 
 const fileStorage = multer.diskStorage({

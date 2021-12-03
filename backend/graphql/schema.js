@@ -43,6 +43,10 @@ module.exports = buildSchema(`
         updatedAt: String!
     }
 
+    type Token {
+        token: String!
+    }
+
     type Comment {
         _id: ID!
         content: String!
@@ -54,6 +58,7 @@ module.exports = buildSchema(`
 
     type Auth {
         token: String!
+        refreshToken: String!
         userId: String!
     }
 
@@ -65,6 +70,8 @@ module.exports = buildSchema(`
     type Mutation {
         register(userInput: userInput): User!
         login(credentials: credentials): Auth!
+        refreshToken(refreshToken:String): Token!
+        logout(refreshToken:String): String!
         createPost(postInput: postInput) : Post!
         updatePost(id:ID, postInput: postInput) : Post!
         deletePost(id:ID) : Post!

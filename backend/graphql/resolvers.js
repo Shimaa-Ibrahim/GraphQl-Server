@@ -5,6 +5,8 @@ const comments = require('../controllers/comments');
 module.exports = {
     register: auth.register,
     login: auth.login,
+    refreshToken: auth.refreshToken,
+    logout: auth.logout,
 
     createPost: posts.createPost,
     posts: posts.getPosts,
